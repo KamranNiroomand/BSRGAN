@@ -1,34 +1,17 @@
 import os.path
 import logging
 import torch
-
+import os
+os.chdir("C:\\Users\\kniroomand\\Desktop\\BSRGAN")
 from utils import utils_logger
 from utils import utils_image as util
 # from utils import utils_model
 from models.network_rrdbnet import RRDBNet as net
 
-
 """
 Spyder (Python 3.6-3.7)
 PyTorch 1.4.0-1.8.1
 Windows 10 or Linux
-Kai Zhang (cskaizhang@gmail.com)
-github: https://github.com/cszn/BSRGAN
-        https://github.com/cszn/KAIR
-If you have any question, please feel free to contact with me.
-Kai Zhang (e-mail: cskaizhang@gmail.com)
-by Kai Zhang ( March/2020 --> March/2021 --> )
-This work was previously submitted to CVPR2021.
-
-# --------------------------------------------
-@inproceedings{zhang2021designing,
-  title={Designing a Practical Degradation Model for Deep Blind Image Super-Resolution},
-  author={Zhang, Kai and Liang, Jingyun and Van Gool, Luc and Timofte, Radu},
-  booktitle={arxiv},
-  year={2021}
-}
-# --------------------------------------------
-
 """
 
 
@@ -37,9 +20,9 @@ def main():
     utils_logger.logger_info('blind_sr_log', log_path='blind_sr_log.log')
     logger = logging.getLogger('blind_sr_log')
 
-#    print(torch.__version__)               # pytorch version
-#    print(torch.version.cuda)              # cuda version
-#    print(torch.backends.cudnn.version())  # cudnn version
+    print(torch.__version__)               # pytorch version
+    print(torch.version.cuda)              # cuda version
+    print(torch.backends.cudnn.version())  # cudnn version
 
     testsets = 'testsets'       # fixed, set path of testsets
     testset_Ls = ['RealSRSet']  # ['RealSRSet','DPED']
@@ -56,7 +39,10 @@ def main():
     for model_name in model_names:
         if model_name in ['BSRGANx2']:
             sf = 2
-        model_path = os.path.join('model_zoo', model_name+'.pth')          # set model path
+          # Construct the absolute path to the model file
+        script_directory = os.path.dirname(os.path.abspath(__file__))
+        model_name = 'BSRGAN.pth'  # Update with the actual model file name
+        model_path = os.path.join(script_directory, 'model_zoo', model_name)
         logger.info('{:>16s} : {:s}'.format('Model Name', model_name))
 
         # torch.cuda.set_device(0)      # set GPU ID
